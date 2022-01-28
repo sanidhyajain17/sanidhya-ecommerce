@@ -1,0 +1,121 @@
+<!doctype html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Invoice</title>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <style>
+        .body-main {
+            background: #ffffff;
+            border-bottom: 15px solid #1E1F23;
+            border-top: 15px solid #1E1F23;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 40px 30px !important;
+            position: relative;
+            box-shadow: 0 1px 21px #808080;
+            font-size: 10px
+        }
+
+        .main thead {
+            background: #1E1F23;
+            color: #fff
+        }
+
+        .img {
+            height: 100px
+        }
+
+        h1 {
+            text-align: center
+        }
+    </style>
+</head>
+
+<body oncontextmenu='return false' class='snippet-body'>
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 body-main">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"> <img class="img" alt="Invoce Template"
+                                    src="{% static 'img/e.jpg' %}" /> </div>
+                            <div class="col-md-8 text-right">
+                                <h2 style="color: black;"><strong>ECom</strong></h2>
+                                <p>To: {{order.user.username}}</p>
+                                <p>{{checkout_address.street_address}} {{checkout_address.apartment_address}}</p>
+                                
+                                <p>{{checkout_address.country}} {{checkout_address.zip}}</p>
+                                <p>{{payment_status.contact}}</p>
+                            </div>
+                        </div> <br />
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h4>Invoice ID: {{payment_status.order_id}}</h4>
+                            </div>
+                        </div> <br />
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <h5>Item</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Count</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Price</h5>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for item in order.items.all %}
+                                    <tr>
+                                        <td>{{item.product.name}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td><i class="fas fa-rupee-sign" area-hidden="true"></i>{{item.get_total_item_price}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                    <tr style="color: black;">
+                                        <td class="text-right">
+                                            <h4><strong>Total:</strong></h4>
+                                        </td>
+                                        <td class="text-left">
+                                            <h4><strong><i class="fas fa-rupee-sign" area-hidden="true"></i>{{order.get_total_price}}</strong></h4>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <div class="col-md-12">
+                                <p><b>Date :</b>{{order.ordered_date}}</p> <br />
+                                <p><b>Signature :</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center"><button>Print</button></div>
+    <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js'></script>
+    <script type='text/javascript' src=''></script>
+    <script type='text/javascript' src=''></script>
+    <script type='text/Javascript'></script>
+</body>
+<script>
+    document.querySelector('button').addEventListener('click', function(){
+        window.print();
+    })
+</script>
+</html>
